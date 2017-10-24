@@ -79,7 +79,23 @@ Bis zur Stelle $x \approx 10^{4}$ nimmt $f$ den analytisch korrekten Wert an und
     \label{eqn:dsdo}
 \end{equation}
 \subsection*{a)}
+Die Funktion ist numerisch instabil, da $\beta \approx 1$ gilt und damit
+\begin{equation}
+    1 - \beta^2 \cos^2\left(n\cdot\mathrm{\pi}\right) \approx 0 \qquad\forall n \in \mathbb{Z}
+\end{equation}
+gilt.
+An den Stellen, an denen $\theta$ ein ganzzahliges Vielfaches von $\mathrm{\pi}$ ist, wird dann durch fast Null geteilt, was schnell zu Rundungsfehlern führt.
 \subsection*{b)}
+Die folgende Umformung sorgt dafür, dass nicht mehr durch fast Null geteilt wird:
+\begin{align}
+    \frac{\mathrm{d}\sigma}{\mathrm{d}\Omega} &= \frac{\alpha^2}{s}
+    \left(\frac{2+\sin^2\left(\theta\right)}{1-\beta^2 \cos^2\left(\theta\right)}\right) =: f\left(\theta\right)\\
+    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\cos^2\left(\theta\right)-\beta^2 \cos^2\left(\theta\right)}\right)\\
+    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\left(1-\beta^2\right)\cos^2\left(\theta\right)}\right)\\
+    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\frac{1}{\gamma^2}\cos^2\left(\theta\right)}\right)\\
+    \Leftrightarrow &= \frac{\alpha^2}{s} \gamma^2 \left(\frac{2+\sin^2\left(\theta\right)}{\gamma^2\sin^2\left(\theta\right)+\cos^2\left(\theta\right)}\right)
+    \label{eqn:dsdogut}
+\end{align}
 \subsection*{c)}
 \begin{figure}
     \centering
@@ -87,6 +103,11 @@ Bis zur Stelle $x \approx 10^{4}$ nimmt $f$ den analytisch korrekten Wert an und
     \caption{Vergleich der numerisch stabilen und instabilen Form.}
     \label{fig:4c}
 \end{figure}
+Die Unterschiede zwischen den beiden Formen \eqref{eqn:dsdo} und \eqref{eqn:dsdogut} sind in Abbildung~\ref{fig:4c} gut zu erkennen.
+Dabei wurden die ursprüngliche Funktion in blau und die umgeformte Funktion in orange gezeichnet in dem Bereich um $\theta \approx 0\cdot\mathrm{\pi}$ geplottet.
+Es ist gut zu erkennen, dass die ursprüngliche Form Plateaus bildet.
+Sie liefert also für mehrere Werte von $\theta$ den gleichen Wert und springt dann am Ende des Plateaus plötzlich auf einen anderen Wert.
+Dieses Verhalten ist bei der umgeformten Funktion nicht mehr zu beobachten.
 \subsection*{d)}
 \begin{equation}
     \begin{split}
@@ -106,4 +127,7 @@ Bis zur Stelle $x \approx 10^{4}$ nimmt $f$ den analytisch korrekten Wert an und
     \caption{Grafische Darstellung des Verlaufs der Konditionszahl.}
     \label{fig:K}
 \end{figure}
+Ein Problem hat für $K<1$ eine Fehlerdämpfung und für $K>1$ eine Fehlerverstärkung.
+Die Bereiche sind in Abbildung~\ref{fig:K} durch die gestrichelte Linie abgetrennt.
+Auffällig ist, dass das Problem bei $\theta = \frac{\mathrm{\pi}}{2}$ besonders gut, und bei $\theta = \mathrm{\pi}$ besonders schlecht konditioniert ist.
 \end{document}
