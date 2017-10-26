@@ -77,7 +77,10 @@ liegt.
 \subsection*{b)}
 Der Erwartungswert des Geschwindigkeitsbetrags lässt sich wie folgt berechnen:
 \begin{align}
-    \ev{v}_f = 
+    \ev{v}_f &= \int_{0}^{\infty} v f(v) \textup{d}v = 4\pi N \int_{0}^{\infty} v^3 \exp\left(-\frac{mv^2}{2k_\textup{B}T}\right) \textup{d}v \\
+    &= 4\pi N \int_{0}^{\infty} \frac{u}{2} \exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u \\
+    &= 2\pi N\left(\left[-\frac{2uk_\textup{B}T}{m}\exp\left(-\frac{mu}{2k_\textup{B}T}\right)\right]_{u=0}^{u=\infty} + \frac{2k_\textup{B}T}{m}\int_{0}^{\infty}\exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u\right) \\
+    &= 2\pi N\left(\frac{k_\textup{B}T}{m}\right)^2 \stackrel{\eqref{eqn:N}}{=} 2 \sqrt{\frac{2k_\textup{B}T}{\pi m}} \,.
 \end{align}
 
 \end{document}
