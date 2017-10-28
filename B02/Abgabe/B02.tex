@@ -1,0 +1,86 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment}
+\usepackage{fullpage}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\usepackage{xfrac}
+\usepackage{icomma}
+\usepackage[section,below]{placeins}
+\usepackage[labelfont=bf,font=small,width=0.9\textwidth]{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{float}
+\floatplacement{figure}{htbp}
+\floatplacement{table}{htbp}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[ngerman]{babel}
+
+\DeclarePairedDelimiter{\ev}{\langle}{\rangle}
+\begin{document}
+\noindent
+%\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
+\large{\textbf{2. Übungsblatt zur Vorlesung \hfill WS 2017/2018 \\
+Statistische Methoden der Datenanalyse \hfill Prof. W. Rhode}} \\
+Annika Burkowitz, Sebastian Bange, Alexander Harnisch \\
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+
+\section*{Aufgabe 5}
+In dieser Aufgabe wird die \textsc{Maxwell}'sche Geschwindigkeitsverteilung in der Form
+\begin{equation}
+    f(v) = N 4 \pi v^2 \exp\left(-\frac{mv^2}{2k_\textup{B}T}\right)
+    \label{eqn:f}
+\end{equation}
+betrachtet. Zuerst ist die Verteilung zu normieren. Dafür kann die Gammafunktion verwendet werden, es geht aber auch viel schöner ohne. Dafür definieren wir zuerst
+\begin{equation}
+    I := \int_{0}^{\infty} \exp(-\alpha t x^2)\textup{d}x\,.
+    \label{eqn:I}
+\end{equation}
+Um $I$ auszuwerten wird quadriert und anschließend in Polarkoordinaten gewechselt:
+\begin{align}
+    I^2 &= \left(\int_{0}^{\infty} \exp(-\alpha tx^2)\textup{d}x\right)\left(\int_{0}^{\infty} \exp(-\alpha tx^2)\textup{d}x\right) \\
+    &= \int_{0}^{\infty}\int_{0}^{\infty} \exp(-\alpha t(x^2 + y^2))\textup{d}x \textup{d}y \\
+    &= \int_{0}^{\pi/2}\textup{d}\phi\int_{0}^{\infty}\exp(-\alpha t r^2)r \textup{d}r \\
+    &= \frac{\pi}{4} \int_{0}^{\infty} \exp(-\alpha t u) \textup{d} u \\
+    &= \frac{\pi}{4\alpha t} \,.
+\end{align}
+Wegen $I > 0$ ergibt sich somit
+\begin{equation}
+    I = \sqrt{I^2} = \frac{1}{2} \sqrt{\frac{\pi}{\alpha t}}\,.
+\end{equation}
+Das für die Normierung zu berechnende Integral lässt sich nun auswerten: 
+\begin{equation}
+    \int_{0}^{\infty} x^2\exp(-\alpha x^2) = - \frac{1}{\alpha} \frac{\textup{d}}{\textup{d}t} I\Big|_{t = 1} = \frac{1}{4}\sqrt{\pi}(\alpha t)^{-\frac{3}{2}}\Big|_{t=1} = \frac{\sqrt{\pi}}{4 \alpha^{\frac{3}{2}}} \,.
+\end{equation}
+Damit erhalten wir
+\begin{align}
+    \int_{0}^{\infty} f(v) \textup{d}v &= N 4 \pi \frac{\sqrt{\pi}}{4}\left(\frac{2k_{\textup{B}}T}{m}\right)^{\frac{3}{2}} \stackrel{\textup{!}}{=} 1 \\
+    \Rightarrow N &= \left(\frac{m}{2\pi k_\textup{B}T}\right)^{\frac{3}{2}} \,.
+    \label{eqn:N}
+\end{align}
+ 
+\subsection*{a)}
+Die wahrscheinlichste Geschwindigkeit $v_\textup{m}$ ist die Stelle, an der $f$ maximal wird. Daher bilden wir die Ableitung
+\begin{equation}
+    \frac{\textup{d}}{\textup{d}v}f = 4\pi Nv\exp\left(-\frac{m v^2}{2 k_\textup{B}T}\right)\left(2 - \frac{mv^2}{k_\textup{B}T}\right) \stackrel{\textup{!}}{=} 0 \,.
+\end{equation}
+Das Extremum bei 0 ist offenbar ein Tiefpunkt, da $f$ keine negativen Werte annimmt und $f(0) = 0$. Daraus folgt, dass die beiden anderen Extrema Maxima sind, wobei das positive der beiden an der gesuchten Stelle
+\begin{equation}
+    v_\textup{m} = \sqrt{\frac{2 k_\textup{B} T}{m}} 
+    \label{eqn:v_m}
+\end{equation}
+liegt.
+\subsection*{b)}
+Der Erwartungswert des Geschwindigkeitsbetrags lässt sich wie folgt berechnen:
+\begin{align}
+    \ev{v}_f &= \int_{0}^{\infty} v f(v) \textup{d}v = 4\pi N \int_{0}^{\infty} v^3 \exp\left(-\frac{mv^2}{2k_\textup{B}T}\right) \textup{d}v \\
+    &= 4\pi N \int_{0}^{\infty} \frac{u}{2} \exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u \\
+    &= 2\pi N\left(\left[-\frac{2uk_\textup{B}T}{m}\exp\left(-\frac{mu}{2k_\textup{B}T}\right)\right]_{u=0}^{u=\infty} + \frac{2k_\textup{B}T}{m}\int_{0}^{\infty}\exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u\right) \\
+    &= 2\pi N\left(\frac{k_\textup{B}T}{m}\right)^2 \stackrel{\eqref{eqn:N}}{=} 2 \sqrt{\frac{2k_\textup{B}T}{\pi m}} \,.
+\end{align}
+
+\end{document}
