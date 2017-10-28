@@ -1,8 +1,8 @@
 \documentclass[a4paper, 11pt]{article}
-\usepackage{comment} 
+\usepackage{comment}
 \usepackage{fullpage}
-\usepackage{amsmath} 
-\usepackage{amssymb} 
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
@@ -34,7 +34,7 @@ Annika Burkowitz, Sebastian Bange, Alexander Harnisch \\
     \caption{Ergebnisse zu Aufgabe 1.}
     \label{fig:a1}
 \end{figure}
-Unsere Ergebnisse zu Aufgabe 1 finden sich in Abbildung~\ref{fig:a1}. Wir gehen davon aus, dass ihr unsere Abgaben zum Korrigieren nicht ausdruckt, darum sollte die Darstellung so mit zoomen gut funktionieren und übersichtlicher sein, als alles einzeln darzustellen. In der ersten Zeile ist das Ergebnis von $(1-x)^6$ in unveränderter Form dargestellt, in der zweiten Zeile die ausmultiplizierte Form und in der dritten Zeile wird mittels Hornerschema ausgewertet. Die Spalten von links nach rechts verwenden 16-Bit, 32-Bit und 64-Bit Gleitkommazahlen. 
+Unsere Ergebnisse zu Aufgabe 1 finden sich in Abbildung~\ref{fig:a1}. Wir gehen davon aus, dass ihr unsere Abgaben zum Korrigieren nicht ausdruckt, darum sollte die Darstellung so mit zoomen gut funktionieren und übersichtlicher sein, als alles einzeln darzustellen. In der ersten Zeile ist das Ergebnis von $(1-x)^6$ in unveränderter Form dargestellt, in der zweiten Zeile die ausmultiplizierte Form und in der dritten Zeile wird mittels Hornerschema ausgewertet. Die Spalten von links nach rechts verwenden 16-Bit, 32-Bit und 64-Bit Gleitkommazahlen.
 
 Allgemein ist zu sagen, dass wie erwartet mit erhöhter Genauigkeit der Gleitkommazahlen auch die Genauigkeit des Ergebnisses zunimmt. Eine Ausnahme ist mit der faktorisierten Form aus a) gegeben, denn hier liefern bereits 32-Bit Gleitkommazahlen das exakte Ergebnis. Die faktorisierte Form ist mit Abstand die beste, da sich die Fehler hier nicht akkumulieren und insgesamt weniger Rechenoperationen durchgeführt werden müssen. Bei den beiden anderen Formen müssen deutlich mehr Rechenoperationen durchgeführt werden wobei sich die Fehler fortpflanzen.
 
@@ -90,10 +90,10 @@ Die folgende Umformung sorgt dafür, dass nicht mehr durch fast Null geteilt wir
 \begin{align}
     \frac{\mathrm{d}\sigma}{\mathrm{d}\Omega} &= \frac{\alpha^2}{s}
     \left(\frac{2+\sin^2\left(\theta\right)}{1-\beta^2 \cos^2\left(\theta\right)}\right) =: f\left(\theta\right)\\
-    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\cos^2\left(\theta\right)-\beta^2 \cos^2\left(\theta\right)}\right)\\
-    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\left(1-\beta^2\right)\cos^2\left(\theta\right)}\right)\\
-    \Leftrightarrow &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\frac{1}{\gamma^2}\cos^2\left(\theta\right)}\right)\\
-    \Leftrightarrow &= \frac{\alpha^2}{s} \gamma^2 \left(\frac{2+\sin^2\left(\theta\right)}{\gamma^2\sin^2\left(\theta\right)+\cos^2\left(\theta\right)}\right)
+     &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\cos^2\left(\theta\right)-\beta^2 \cos^2\left(\theta\right)}\right)\\
+     &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\left(1-\beta^2\right)\cos^2\left(\theta\right)}\right)\\
+     &= \frac{\alpha^2}{s} \left(\frac{2+\sin^2\left(\theta\right)}{\sin^2\left(\theta\right)+\frac{1}{\gamma^2}\cos^2\left(\theta\right)}\right)\\
+     &= \frac{\alpha^2}{s} \gamma^2 \left(\frac{2+\sin^2\left(\theta\right)}{\gamma^2\sin^2\left(\theta\right)+\cos^2\left(\theta\right)}\right)
     \label{eqn:dsdogut}
 \end{align}
 \subsection*{c)}
@@ -104,7 +104,7 @@ Die folgende Umformung sorgt dafür, dass nicht mehr durch fast Null geteilt wir
     \label{fig:4c}
 \end{figure}
 Die Unterschiede zwischen den beiden Formen \eqref{eqn:dsdo} und \eqref{eqn:dsdogut} sind in Abbildung~\ref{fig:4c} gut zu erkennen.
-Dabei wurden die ursprüngliche Funktion in blau und die umgeformte Funktion in orange gezeichnet in dem Bereich um $\theta \approx 0\cdot\mathrm{\pi}$ geplottet.
+Dabei wurden die ursprüngliche Funktion in blau und die umgeformte Funktion in orange gezeichnet in dem Bereich um $\theta = 180\,°$ geplottet.
 Es ist gut zu erkennen, dass die ursprüngliche Form Plateaus bildet.
 Sie liefert also für mehrere Werte von $\theta$ den gleichen Wert und springt dann am Ende des Plateaus plötzlich auf einen anderen Wert.
 Dieses Verhalten ist bei der umgeformten Funktion nicht mehr zu beobachten.
