@@ -74,14 +74,36 @@ Das Extremum bei 0 ist offenbar ein Tiefpunkt, da $f$ keine negativen Werte anni
     \label{eqn:v_m}
 \end{equation}
 liegt.
+
 \subsection*{b)}
 Der Erwartungswert des Geschwindigkeitsbetrags lässt sich wie folgt berechnen:
 \begin{align}
     \ev{v}_f &= \int_{0}^{\infty} v f(v) \textup{d}v = 4\pi N \int_{0}^{\infty} v^3 \exp\left(-\frac{mv^2}{2k_\textup{B}T}\right) \textup{d}v \\
     &= 4\pi N \int_{0}^{\infty} \frac{u}{2} \exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u \\
     &= 2\pi N\left(\left[-\frac{2uk_\textup{B}T}{m}\exp\left(-\frac{mu}{2k_\textup{B}T}\right)\right]_{u=0}^{u=\infty} + \frac{2k_\textup{B}T}{m}\int_{0}^{\infty}\exp\left(-\frac{mu}{2k_\textup{B}T}\right) \textup{d}u\right) \\
-    &= 2\pi N\left(\frac{k_\textup{B}T}{m}\right)^2 \stackrel{\eqref{eqn:N}}{=} 2 \sqrt{\frac{2k_\textup{B}T}{\pi m}} \,.
+    &= 2\pi N\left(\frac{k_\textup{B}T}{m}\right)^2 \stackrel{\eqref{eqn:N}}{=} 2 \sqrt{\frac{2k_\textup{B}T}{\pi m}} = \frac{2}{\sqrt{\pi}}v_\textup{m} \,.
 \end{align}
+
+\subsection*{c)}
+Gesucht ist der Median $v_{0,5}$, für den gilt
+\begin{equation}
+    \int_{0}^{v_{0,5}} f(v) \textup{d}v = \frac{1}{2} \,.
+    \label{eqn:median_int}
+\end{equation}
+Es ist nicht möglich, eine analytische Lösung für $v_{0,5}$ zu finden, da für $f(v)$ keine Stammfunktion gefunden werden kann. Daher lösen wir die Gleichung numerisch, dafür muss diese zuerst in eine dimensionslose Form gebracht werden. Mit dem vorherigen Ergebnis \eqref{eqn:v_m} gilt
+\begin{equation}
+    N = \pi^{-\frac{3}{2}}v_\textup{m}^{-3} \Rightarrow f(v) = \frac{4}{\sqrt{\pi}v_\textup{m}}\frac{v^2}{v_\textup{m}^2} \exp\left(-\frac{v^2}{v_\textup{m}^2}\right)\,.
+\end{equation}
+Mit der Substitution $x = \frac{v}{v_\textup{m}}$ nimmt \eqref{eqn:median_int} die für numerische Integration geeignete Form
+\begin{equation}
+    \int_{0}^{v_{0,5}} f(v) \textup{d}v = \frac{4}{\sqrt{\pi}} \int_{0}^{\frac{v_{0,5}}{v_\textup{m}}} x^2 e^{-x^2} \textup{d}x \stackrel{\textup{!}}{=} \frac{1}{2}
+\end{equation}
+an. Das Integral kann nun sukzessive mit einer beliebigen \textsc{Newton}-\textsc{Cotes}-Formel berechnet werden, bis es den gewünschten Wert von $\frac{1}{2}$ überschreitet. Wir verwenden die Trapezregel. Um den Performance-Limitierungen von Python möglichst gut zu entgehen verwenden wir außerdem die Pakete \textsc{Numpy} bzw. \textsc{numexpr}. Es werden in einer Schleife immer $N$ Funktionsauswertungen parallelisiert durchgeführt und die Teilsummen anschließend aufsummiert. Für optimale Performance sollte $N$ so gewählt werden, dass der Hauptspeicher maximal ausgelastet wird. Prinzipiell haben wir die Berechnung so implementiert, dass beliebige Genauigkeiten erreicht werden können. So haben wir den Median mit einer Genauigkeit von $10^{-10}$ als
+\begin{equation}
+    v_{0,5} = 1,0876520285 v_\textup{m}
+\end{equation}
+bestimmt.
+
 
 \section*{Aufgabe 6}
 In dieser Aufgabe werden die Wahrscheinlichkeiten für ausgewählte Ereignisse, die
