@@ -19,6 +19,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage[final]{pdfpages}
 
 \DeclarePairedDelimiter{\ev}{\langle}{\rangle}
 \begin{document}
@@ -51,6 +52,7 @@ Um $I$ auszuwerten wird quadriert und anschließend in Polarkoordinaten gewechse
 Wegen $I > 0$ ergibt sich somit
 \begin{equation}
     I = \sqrt{I^2} = \frac{1}{2} \sqrt{\frac{\pi}{\alpha t}}\,.
+    \label{eqn:I_sol}
 \end{equation}
 Das für die Normierung zu berechnende Integral lässt sich nun auswerten:
 \begin{equation}
@@ -76,6 +78,7 @@ Das Extremum bei 0 ist offenbar ein Tiefpunkt, da $f$ keine negativen Werte anni
 liegt.
 
 \subsection*{b)}
+\label{subsec:b}
 Der Erwartungswert des Geschwindigkeitsbetrags lässt sich wie folgt berechnen:
 \begin{align}
     \ev{v}_f &= \int_{0}^{\infty} v f(v) \textup{d}v = 4\pi N \int_{0}^{\infty} v^3 \exp\left(-\frac{mv^2}{2k_\textup{B}T}\right) \textup{d}v \\
@@ -98,12 +101,46 @@ Mit der Substitution $x = \frac{v}{v_\textup{m}}$ nimmt \eqref{eqn:median_int} d
 \begin{equation}
     \int_{0}^{v_{0,5}} f(v) \textup{d}v = \frac{4}{\sqrt{\pi}} \int_{0}^{\frac{v_{0,5}}{v_\textup{m}}} x^2 e^{-x^2} \textup{d}x \stackrel{\textup{!}}{=} \frac{1}{2}
 \end{equation}
-an. Das Integral kann nun sukzessive mit einer beliebigen \textsc{Newton}-\textsc{Cotes}-Formel berechnet werden, bis es den gewünschten Wert von $\frac{1}{2}$ überschreitet. Wir verwenden die Trapezregel. Um den Performance-Limitierungen von Python möglichst gut zu entgehen verwenden wir außerdem die Pakete \textsc{Numpy} bzw. \textsc{numexpr}. Es werden in einer Schleife immer $N$ Funktionsauswertungen parallelisiert durchgeführt und die Teilsummen anschließend aufsummiert. Für optimale Performance sollte $N$ so gewählt werden, dass der Hauptspeicher maximal ausgelastet wird. Prinzipiell haben wir die Berechnung so implementiert, dass beliebige Genauigkeiten erreicht werden können. So haben wir den Median mit einer Genauigkeit von $10^{-10}$ als
+an. Das Integral kann nun sukzessive mit einer beliebigen \textsc{Newton}-\textsc{Cotes}-Formel berechnet werden, bis es den gewünschten Wert von $\frac{1}{2}$ überschreitet. Wir verwenden die Trapezregel. Um den Performance-Limitierungen des \textsc{Python}-Interpreters möglichst gut zu entgehen, verwenden wir außerdem die Pakete \textsc{Numpy} bzw. \textsc{numexpr}. Es werden in einer Schleife immer $N$ Funktionsauswertungen parallelisiert durchgeführt und die Teilsummen anschließend aufsummiert. Für optimale Performance sollte $N$ so gewählt werden, dass der Hauptspeicher maximal ausgelastet wird. Außerdem ist die Lösung für umso stabiler, umso größer $N$ gewählt wird, da seltener gerundet werden muss. Prinzipiell haben wir die Berechnung so implementiert, dass beliebige Genauigkeiten erreicht werden können. So haben wir den Median mit einer Genauigkeit von $10^{-10}$ als
 \begin{equation}
     v_{0,5} = 1,0876520285 v_\textup{m}
 \end{equation}
 bestimmt.
 
+\subsection*{d)}
+Die volle Breite auf halber Höhe $v_\textup{FWHM}$ ergibt sich als Differenz der Lösungen von
+\begin{equation}
+    f(v) - \frac{1}{2} f(v_\textup{m}) = x^2 \exp\left(-x^2\right) - \frac{1}{2e} \stackrel{\textup{!}}{=} 0
+    \label{eqn:FWHM}
+\end{equation}
+mit $x = \frac{v}{v_\textup{m}}$. Das Ergebnis lässt sich zwar unter Verwendung der \textsc{Lambertschen}-W-Funktion analytisch darstellen, diese besitzt aber bekanntlich selbst keine elementare Darstellung. Daher lösen wir erneut numerisch. Da \eqref{eqn:FWHM} einfach analytisch abgeleitet werden kann, bietet sich die Verwendung des \textsc{Newton}-Verfahrens an. Die Ableitung lautet
+\begin{equation}
+    \frac{\textup{d}}{\textup{d}x} \left(f(v) - \frac{1}{2} f(v_\textup{m})\right) = 2x \exp(-x^2)(1 - x^2)\,.
+\end{equation}
+Aufgrund der quadratischen Konvergenz des \textsc{Newton}-Verfahrens ergeben sich bereits nach wenigen Iterationen mit den Startwerten $0,8$ und $1,2$ die gesuchten Nullstellen 
+\begin{gather}
+    x_1 = 0,481623247971, \quad x_2 = 1,63656560822 \\
+    \Rightarrow v_\textup{FWHM} = v_\textup{m} (x_2 - x_1) = 1,15494236025 v_\textup{m} \,.
+\end{gather}
+
+\subsection*{e)}
+Da wir den Mittelwert der Geschwindigkeit $\ev{v}$ bereits in \hyperref[subsec:b]{b)} bestimmt haben, bietet es sich an die Standardabweichung der Geschwindigkeit $\sigma_v$ über die Form
+\begin{equation}
+    \sigma_v^2 = \ev{v^2} - \ev{v}^2
+\end{equation}
+zu bestimmen, denn damit muss nur noch
+\begin{equation}
+    \ev{v^2} = \int_{0}^{\infty} v^2 f(v) \textup{d}v = 4\pi N \int_{0}^{\infty} v^4 \exp\left(-\frac{v^2}{v_\textup{m}^2}\right) \textup{d}v
+\end{equation}
+ausgewertet werden. Hierzu verwenden wir erneut die Definition \eqref{eqn:I}: 
+\begin{equation}
+    \int_{0}^{\infty} x^4 \exp(-\alpha x^2) \textup{d}x = \frac{1}{\alpha^2} \frac{\textup{d}^2}{\textup{d}t^2}I \Big|_{t = 1} \stackrel{\eqref{eqn:I_sol}}{=} \frac{3\sqrt{\pi}}{8}\alpha^{-\frac{5}{2}}\,.
+\end{equation}
+Damit ergibt sich
+\begin{gather}
+    \ev{v^2} = 4\pi (\pi v_\textup{m}^2)^{-\frac{3}{2}} \frac{3\sqrt{\pi}}{8} v_\textup{m}^5 = \frac{3}{2}v_\textup{m}^2 \\
+    \Rightarrow \sigma_v = \sqrt{\ev{v^2} - \ev{v}^2} = \sqrt{\frac{3}{2}  - \frac{4}{\pi}} v_\textup{m} \,.
+\end{gather}
 
 \section*{Aufgabe 6}
 In dieser Aufgabe werden die Wahrscheinlichkeiten für ausgewählte Ereignisse, die
@@ -133,4 +170,20 @@ angeschaut.
   &\text{g)} \quad
   P(W_\text{blau}=5 | W_\text{rot}=4) = 1 \cdot \frac{1}{6} = \frac{1}{6}
 \end{align*}
+\section*{Aufgabe 7}
+Die Rechnungen und dazugehörige Erklärung sind handschriftlich am Ende zu finden. Die zu Erstellende \glqq Zeichnung\grqq{} ist mit Abbildung~\ref{fig:A7} gegeben. Dazu ist noch anzumerken:
+\begin{itemize}
+    \item \textbf{c)} Die gewünschte Ellipse ist die $1\sigma$-Ellipse, und als solche gekennzeichnet. Die Erwartungswerte sind zusammen mit den Standardabweichungen als Fehlerbalken dargestellt.
+    \item \textbf{d)} Die Größe der Werte $\sigma_{x'}$ und $\sigma_{y'}$ sind durch die (halbe) Länge der Hauptachsen dargestellt.
+    \item \textbf{e)} Die Länge der Hauptachsen sind $2\sigma_{x'}$ und $2\sigma_{y'}$ (vgl. handschriftlicher Teil). Der Winkel zwischen Hauptachsen und Koordinatenachsen ist der negative Drehwinkel zur Diagonalisierung der Kovarianzmatrix (etwa 20°, vgl. handschriftlicher Teil).
+    \item \textbf{f)} Die bedingten Wahrscheinlichkeitsdichten $f(x|y)$ und $f(y|x)$ lassen sich unmöglich noch in der selben Abbildung darstellen, da sie selbst zweidimensionale Verteilungen sind. Wir gehen davon aus, dass der Copy \& Paste Satz in der Teilaufgabe eigentlich nicht dazugehört.
+    \item \textbf{e)} Die bedingten Erwartungswerte $E(x|y)$ und $E(y|x)$ sind als durchgezogene Geraden dargestellt, ihre Standardabweichungen als dazu parallele, gepunktete Linien in der selben Farbe.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{../A07/A7.png}
+    \caption{Graphische Darstellung der Ergebnisse von Aufgabe 7.}
+    \label{fig:A7}
+\end{figure}
+\includepdf[pages=-]{../A07/A7_Text.pdf}
 \end{document}

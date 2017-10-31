@@ -37,11 +37,11 @@ def aufg5c(h=1e-10, N=1e8):
     Anpassen je nach Hauptspeichergröße, umso höhere Auslastung umso besser.
     h: Genauigkeit (Schrittweite der Integration)
     """
-    f = np.vectorize(lambda x: x**2*np.exp(-x**2))
     # Zuerst einen groben Wert finden, die obere Grenze muss hier vorher
     # noch gröber abgeschätzt werden. 2*v_m sollte sicher drüber liegen.
     h1 = 1e-6
-    a = h1*(np.cumsum(f(np.arange(0, 2, h1)))
+    a = h1*(np.cumsum(np.vectorize(lambda x: x**2*np.exp(-x**2))
+                      (np.arange(0, 2, h1)))
             * h1*4/np.sqrt(np.pi)).searchsorted(0.5)
     print("Grobe Näherung für Median:", a)
     # print("1.087652")
@@ -57,7 +57,8 @@ def aufg5c(h=1e-10, N=1e8):
         loopS = time.time()
         S += s
         i += 1
-        x = np.arange((i - 1)*N*h, i*N*h, h) # doch wird benutzt
+        # [F841] wird hier fälschlicherweise gewarnt
+        x = np.arange((i - 1)*N*h, i*N*h, h)
         eva = ne.evaluate("x**2*exp(-x**2)")
         s = ne.evaluate("sum(eva)")
         loopT = time.time() - loopS
@@ -67,6 +68,7 @@ def aufg5c(h=1e-10, N=1e8):
 
     median = h*((np.cumsum(eva)).searchsorted(0.5/(h*4)*np.sqrt(np.pi) - S)
                 + (i - 1)*N)
+
     print("Status: 100 %                                       ")
     stop = time.time()
     print("Gesamtzeit:", round(stop - start, 2))
@@ -75,17 +77,19 @@ def aufg5c(h=1e-10, N=1e8):
 
 # ------------------------------------ d) -------------------------------------
 def aufg5d():
+    print("Bestimme Nullstellen von x^2exp(-x^2) - 1/(2e):")
     x1 = newton(lambda x: x**2*np.exp(-x**2) - 1/(2*np.e), 0.8,
                 lambda x: 2*x*np.exp(-x**2)*(1 - x**2))
     x2 = newton(lambda x: x**2*np.exp(-x**2) - 1/(2*np.e), 1.2,
                 lambda x: 2*x*np.exp(-x**2)*(1 - x**2))
 
     print("x_1 =", x1, "x_2 =", x2)
-    print("v_FWHM = v_m *", x2 - x1)
+    print("=> v_FWHM = v_m *", x2 - x1)
 
 
 # ----------------------------------- Main ------------------------------------
 if __name__ == '__main__':
     # aufg5cIterativ()
-    aufg5c(N=0.75e9) # ca. 17 GB RAM
-    # aufg5d()
+    # aufg5c(N=0.75e9)  # ca. 17 GB RAM
+    aufg5c(N=1e8)  # ca. 2,3 GB RAM
+    aufg5d()
