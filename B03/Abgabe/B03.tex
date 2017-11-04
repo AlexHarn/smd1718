@@ -1,0 +1,49 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} 
+\usepackage{fullpage}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{mathtools}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\usepackage{xfrac}
+\usepackage{icomma}
+\usepackage[section,below]{placeins}
+\usepackage[labelfont=bf,font=small,width=0.9\textwidth]{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{float}
+\floatplacement{figure}{htbp}
+\floatplacement{table}{htbp}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[ngerman]{babel}
+\begin{document}
+\noindent
+%\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
+\large{\textbf{3. Übungsblatt zur Vorlesung \hfill WS 2017/2018 \\
+Statistische Methoden der Datenanalyse \hfill Prof. W. Rhode}} \\
+Annika Burkowitz, Sebastian Bange, Alexander Harnisch \\
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+
+\section*{Aufgabe 8}
+\subsection*{a)}
+Die Wahrscheinlichkeit, dass $x$ einen Wert zwischen $\frac{1}{3}$ und $\frac{1}{2}$ annimmt ist gegeben durch
+\begin{equation}
+    \int_{\frac{1}{3}}^{\frac{1}{2}} f(x) \textup{d}x = \frac{1}{2} - \frac{1}{3} = \frac{1}{6} \,.
+\end{equation}
+
+\subsection*{b)}
+Die Wahrscheinlichkeit, dass irgendein ein exakter Wert angenommen wird ist 0. Dies ist einerseits klar, weil mit unendlich verschiedenen möglichen Werten sonst nie eine endliche Gesamtwahrscheinlichkeit erreicht werden könnte. Außerdem ist natürlich die integrierte Wahrscheinlichkeitsdichte
+\begin{equation}
+    \int_{a}^{a} f(x) \textup{d}x = 0 \,.
+\end{equation}
+
+\subsection*{c)}
+Da die verwendete Gleitkommazahldarstellung nicht genau angegeben ist, nehmen wir hierfür an, dass alle 23 Mantissenbits für die Darstellung von Zahlen zwischen 0 und 1 genutzt werden können und dass $\frac{1}{2}$ exakt darstellbar ist. In diesem Fall gibt es also insgesamt $2^{23}$ darstellbare Zahlen zwischen 0 und 1, und eine davon ist $\frac{1}{2}$ daher ist die Wahrscheinlichkeit genau $\frac{1}{2}$ (oder irgendeine andere der exakt darstellbaren Zahlen) zu ziehen $2^{-23}$.
+
+\subsection*{d)}
+Da $\frac{2}{3}$ eine Zahl mit unendlich vielen, periodischen Nachkommastellen ist, ist sie unabhängig von der gewählten Gleitkommazahldarstellung nie exakt darstellbar und daher ist die Wahrscheinlichkeit sie (oder irgendeine andere nicht exakt darstellbare Zahl) zu ziehen 0.
+
+\end{document}
