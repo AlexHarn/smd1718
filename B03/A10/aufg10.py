@@ -8,6 +8,23 @@ rcParams['legend.numpoints'] = 1
 
 
 # ------------------------------------ a) -------------------------------------
+def dist_a(x_min=0, x_max=1, N=1e6):
+    """Liefert zwischen x_min und x_max gleichverteilte Zufallszahlen"""
+    return (x_max - x_min)*np.random.uniform(size=int(N)) + x_min
+
+
+def aufg10a(x_min, x_max, N=1e6):
+    """Validiert das Ergebnis für Aufgabe 10a graphisch"""
+    plt.hist(dist_a(x_min, x_max, N), bins=100, density=True,
+             label="Generierte Zahlen")
+    plt.xlim(1.5, 5.5)
+    plt.ylim(0, 0.4)
+    plt.xlabel(r"$x$")
+    plt.ylabel("Wahrscheinlichkeitsdichte")
+    plt.legend()
+    # plt.show()
+    plt.savefig("A10a.pdf")
+    plt.clf()
 
 
 # ------------------------------------ b) -------------------------------------
@@ -41,8 +58,8 @@ def dist_c(n, x_min, x_max, N=1e6):
     """
     if n < 2 or not isinstance(n, int):
         raise ValueError("n muss ein Integer größer oder gleich 2 sein")
-    z = np.random.uniform(size=int(N))
-    return (z*x_max**(1 - n) - (z - 1)*x_min**(1 - n))**(1/(1 - n))
+    return (np.random.uniform(size=int(N))*(x_max**(1 - n) - x_min**(1 - n))
+            + x_min**(1 - n))**(1/(1 - n))
 
 
 def aufg10c(n, x_min, x_max, N=1e6):
@@ -128,6 +145,7 @@ def aufg10e():
 # ----------------------------------- Main ------------------------------------
 if __name__ == '__main__':
     np.random.seed(1234)
+    aufg10a(2, 5)
     aufg10b(1)
     aufg10c(2, 1, 5)
     aufg10d()
