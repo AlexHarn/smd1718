@@ -41,10 +41,38 @@ Die Wahrscheinlichkeit, dass irgendein ein exakter Wert angenommen wird ist 0. D
 \end{equation}
 
 \subsection*{c)}
-Da die verwendete Gleitkommazahldarstellung nicht genau angegeben ist, nehmen wir hierfür an, dass alle 23 Mantissenbits für die Darstellung von Zahlen zwischen 0 und 1 genutzt werden können und dass $\frac{1}{2}$ exakt darstellbar ist. In diesem Fall gibt es also insgesamt $2^{23}$ darstellbare Zahlen zwischen 0 und 1, und eine davon ist $\frac{1}{2}$ daher ist die Wahrscheinlichkeit genau $\frac{1}{2}$ (oder irgendeine andere der exakt darstellbaren Zahlen) zu ziehen $2^{-23}$.
+In den folgenden beiden Aufgaben sollen die Zahlen von einem Computer berechnet werden können.
+Zur Darstellung soll eine Mantisse mit 23 Binärstellen angenommen werden.
+Damit möglichst viele Zahlen zwischen 0 und 1 dargestellt werden können und die Zahlen 0 und 1 ebenfalls in der Menge enthalten sind, wird folgende Darstellung gewählt:
+\begin{center}
+    \begin{tabular}{c|c}
+        Binärdarstellung & Dezimaldarstellung \\
+        \toprule
+        00000000000000000000000 & 0 \\
+        00000000000000000000001 & $\frac{1}{2^{23} - 1}$ \\
+        00000000000000000000010 & $2\cdot\frac{1}{2^{23} - 1}$ \\
+        \multicolumn{2}{c}{\vdots} \\
+        11111111111111111111111 & 1 \\
+    \end{tabular}
+\end{center}
+Dadurch hat jede darstellbare Zahl die Wahrscheinlichkeit $p = 2^{-23}$ aufzutreten.
+
+Um zu testen, ob die Zahl $\frac{1}{2}$ darstellbar ist, wird berechnet, ob $\frac{1}{2}$ ein ganzzahliges Vielfaches von $\frac{1}{2^{23} - 1}$ ist:
+\begin{align}
+    x \frac{1}{2^{23} - 1} &\overset{!}{=} \frac{1}{2} \\
+    \Leftrightarrow x &= \frac{2^{23} - 1}{2} \\
+    &= 4194303.5 \not\in \mathbb{N}.
+\end{align}
+Damit ist die Zahl $\frac{1}{2}$ nicht exakt darstellbar und die Wahrscheinlichkeit sie zu berechnen ist Null.
 
 \subsection*{d)}
-Da $\frac{2}{3}$ eine Zahl mit unendlich vielen, periodischen Nachkommastellen ist, ist sie unabhängig von der gewählten Gleitkommazahldarstellung nie exakt darstellbar und daher ist die Wahrscheinlichkeit diese oder irgendeine andere nicht exakt darstellbare Zahl zu ziehen 0.
+Um zu testen, ob die Zahl $\frac{2}{3}$ darstellbar ist, wird berechnet, ob $\frac{2}{3}$ ein ganzzahliges Vielfaches von $\frac{1}{2^{23} - 1}$ ist:
+\begin{align}
+    x \frac{1}{2^{23} - 1} &\overset{!}{=} \frac{2}{3} \\
+    \Leftrightarrow x &= \frac{2(2^{23} - 1)}{3} \\
+    &\approx 5592404.66667 \not\in \mathbb{N}.
+\end{align}
+Damit ist die Zahl $\frac{2}{3}$ nicht exakt darstellbar und die Wahrscheinlichkeit sie zu berechnen ist Null.
 
 \section*{Aufgabe 9}
 \subsection*{a)}
