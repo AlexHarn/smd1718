@@ -13,7 +13,7 @@ def aufg15c():
     sample = normal.sample(15, 10000)
     bins = plt.hist(sample, bins=50,
                     density=True, label="Gezogen")[1]
-    x = np.linspace(bins[0], bins[-1])
+    x = np.linspace(bins[0], bins[-1], 1000)
     plt.plot(x, normal.pdf(x), label="PDF")
     plt.xlabel("$x$")
     plt.ylabel("Wahrscheinlichkeitsdichte")
