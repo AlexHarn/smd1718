@@ -1,8 +1,8 @@
 \documentclass[a4paper, 11pt]{article}
-\usepackage{comment} 
+\usepackage{comment}
 \usepackage{fullpage}
-\usepackage{amsmath} 
-\usepackage{amssymb} 
+\usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
@@ -19,6 +19,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage{pdfpages}
 \begin{document}
 \noindent
 %\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
@@ -91,4 +92,7 @@ Die Signifikanz $\frac{S}{\sqrt{S + B}}$ wird maximal für $S + B \rightarrow 0$
     \label{fig:A16g_1000}
 \end{figure}
 \FloatBarrier
+
+\includepdf[pages=-]{../SMD_B5_A17}
+
 \end{document}
