@@ -20,9 +20,11 @@ if __name__ == '__main__':
     # Führt Berechnungen für a) bis c) durch
     fisher = Fisher(p0, p1)
     # fisher.show()
+    print("Mittelwerte für p_0_10000:", fisher.m)
+    print("kombinierte Kovarianzmatrix für p_0_10000:", fisher.sw)
 
     # c)
-    print("Geradengleichung der Projektion für P_0_10000: g(x) = %1.2f*x"
+    print("Geradengleichung der Projektion für P_0_10000: g(x) = %1.4f*x"
           % (fisher.lam[1]/fisher.lam[0]))
 
     # d)
@@ -42,7 +44,9 @@ if __name__ == '__main__':
     # h)
     fisher.p[0] = p0_1000
     fisher.calc()
-    print("Geradengleichung der Projektion für P_0_1000: g(x) = %1.2f*x"
+    print("Mittelwerte für p_0_1000:", fisher.m)
+    print("kombinierte Kovarianzmatrix für p_0_1000:", fisher.sw)
+    print("Geradengleichung der Projektion für P_0_1000: g(x) = %1.4f*x"
           % (fisher.lam[1]/fisher.lam[0]))
     fisher.showHist(save="A16d_1000.pdf")
     fisher.cut()

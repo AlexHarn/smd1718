@@ -5,18 +5,49 @@ import matplotlib.pyplot as plt
 class Fisher(object):
     def __init__(self, signal=None, background=None):
         """
-        Konstruktor
+        Initiallisiert alle verwendeten Klassen Attribute.
+        Falls signal und background gesetzt sind wird die Fisher
+        Diskriminanzanalyse direkt durchgeführt.
+
+        Parameter
+        ---------
+        signal: Signalteil der Trainingsdaten 2D Array mit x- und y-Werten der
+        Punkte
+        background: Hintergrundsteil der Trainingsdaten 2D Array mit x- und
+        y-Werten der Punkte
         """
+        # Zu trennende Populationen
         self.p = [signal, background]
+
+        # Vektor mit lambda_cut Werten für die Schnitte
         self._ls = None
+        # Array mit den projezierten Koordinaten beider Populationen
         self._proj = None
+
+        # Vektor der Fischer Diskriminante
+        self.lam = None
+        # Mittelwerte der Populationen
+        self.m = None
+        # Kombinierte Kovarianzmatrix
+        self.sw = None
+
+        # Arrays die für alle Schnitte in self._ls die Anzahl der jeweiligen
+        # tp, tn, fp, und fn halten
+        self.tp = None
+        self.tn = None
+        self.fp = None
+        self.fn = None
+
+        # Berechnung durchführen, falls signal und bakcground übergeben
         if signal is not None and background is not None:
             self.calc()
 
     def calc(self):
         """
-        Berechnet alles
+        Führt die Fisher Diskriminanzanalyse durch
         """
+        if self.p[0] is None or self.p[1] is None:
+            raise ValueError("Es müssen Populationen gegeben sein.")
         # Die Variablennamen halten sich ans Skript
         # Streuung
         self.sw = np.matrix(np.add(np.cov(self.p[0])*len(self.p[0] - 1),
@@ -43,8 +74,16 @@ class Fisher(object):
 
     def show(self, save=False):
         """
-        Zeigt an!
+        Zeigt einen Scatterplot der Populationen zusammen mit der berechneten
+        Fisher Diskriminante an
+
+        Parameter
+        ---------
+        save: False zeigt an, ansonsten Dateiname der zu speichernden Datei
         """
+        if self.lam is None or self.p[0] is None or self.p[1] is None:
+            raise ValueError("Es muss zuerst eine Diskriminante \
+                             berechnet werden.")
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.scatter(self.p[0][0], self.p[0][1], marker=".", s=2.5,
@@ -66,7 +105,15 @@ class Fisher(object):
     def showHist(self, bins=25, save=False):
         """
         Zeigt das Histogramm der Projektion an
+
+        Parameter
+        ---------
+        bins: Anzahl der bins
+        save: False zeigt an, ansonsten Dateiname der zu speichernden Datei
         """
+        if self._proj is None:
+            raise ValueError("Es muss zuerst eine Diskriminante \
+                             berechnet werden.")
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
@@ -82,6 +129,16 @@ class Fisher(object):
             plt.show()
 
     def cut(self, nl=1000):
+        """
+        Führt nl gleichverteilte Schnitte durch
+
+        Parameter
+        ---------
+        nl: Anzahl der durchzuführenden Schnitte
+        """
+        if self._proj is None:
+            raise ValueError("Es muss zuerst eine Diskriminante \
+                             berechnet werden.")
         p = [np.sort(self._proj[0])[::-1], np.sort(self._proj[1])[::-1]]
         self._ls = np.linspace(max(p[0][0], p[1][0]),
                                min(p[0][-1], p[1][-1]), nl)
@@ -102,8 +159,16 @@ class Fisher(object):
             self.tn[n] = len(p[1]) - k
 
     def showCuts(self, save=False):
+        """
+        Zeigt Reinheit, Effizienz und Genauigkeit für die berechneten Schnitte
+        an bzw. speichert diese wenn save gesetzt ist.
+
+        Parameter
+        ---------
+        save: False zeigt an, ansonsten Dateiname der zu speichernden Datei
+        """
         if self._ls is None:
-            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden!")
+            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden.")
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -121,8 +186,16 @@ class Fisher(object):
             plt.show()
 
     def showSignificance(self, save=False):
+        """
+        Zeigt die Signifikanz für die berechneten Schnitte an bzw. speichert
+        diese wenn save gesetzt ist.
+
+        Parameter
+        ---------
+        save: False zeigt an, ansonsten Dateiname der zu speichernden Datei
+        """
         if self._ls is None:
-            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden!")
+            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden.")
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -139,8 +212,16 @@ class Fisher(object):
             plt.show()
 
     def showSignalToBackground(self, save=False):
+        """
+        Zeigt das Signal-Hintergrund-Verhältnis für die berechneten Schnitte an
+        bzw. speichert diese wenn save gesetzt ist.
+
+        Parameter
+        ---------
+        save: False zeigt an, ansonsten Dateiname der zu speichernden Datei
+        """
         if self._ls is None:
-            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden!")
+            raise ValueError("Die Schnitte müssen zuerst durchgeführt werden.")
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -152,6 +233,7 @@ class Fisher(object):
         ax.legend()
         ax.set_xlabel("$\lambda_\mathrm{cut}$")
         ax.set_ylabel(r"$\frac{S}{B}$")
+        ax.set_yscale("log")
         if save:
             fig.savefig(save)
         else:
