@@ -203,7 +203,6 @@ class Fisher(object):
         ax.plot(self._ls, (self.tp + self.fp) /
                 np.sqrt(len(self._proj[0]) + len(self._proj[1])))
         ax.set_xlim(self._ls[-1], self._ls[0])
-        ax.legend()
         ax.set_xlabel("$\lambda_\mathrm{cut}$")
         ax.set_ylabel(r"$\frac{S}{\sqrt{S + B}}$")
         if save:
@@ -230,7 +229,6 @@ class Fisher(object):
             ax.plot(self._ls, (self.tp + self.fp)/(self.tn + self.fn))
 
         ax.set_xlim(self._ls[-1], self._ls[0])
-        ax.legend()
         ax.set_xlabel("$\lambda_\mathrm{cut}$")
         ax.set_ylabel(r"$\frac{S}{B}$")
         ax.set_yscale("log")

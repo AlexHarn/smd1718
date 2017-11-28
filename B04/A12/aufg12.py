@@ -10,8 +10,8 @@ rcParams['legend.numpoints'] = 1
 
 # ------------------------------------ b) -------------------------------------
 def aufg12b(plot=True):
-    p0 = np.random.multivariate_normal([0, 3], [[3.5**2, 0.9*3.5*2.5],
-                                                [0.9*3.5*2.5, 2.5**2]],
+    p0 = np.random.multivariate_normal([0, 3], [[3.5**2, 0.9*3.5*2.6],
+                                                [0.9*3.5*2.6, 2.6**2]],
                                        size=10000).T
     p1 = np.empty((2, 10000))
     p1[0] = np.random.normal(6, 3.5, size=10000)
@@ -56,8 +56,8 @@ def aufg12c(p0, p1):
 
 
 def aufg12d(p0, p1):
-    p0_1000 = np.random.multivariate_normal([0, 3], [[3.5**2, 0.9*3.5*2.5],
-                                                     [0.9*3.5*2.5, 2.5**2]],
+    p0_1000 = np.random.multivariate_normal([0, 3], [[3.5**2, 0.9*3.5*2.6],
+                                                     [0.9*3.5*2.6, 2.6**2]],
                                             size=1000).T
 
     fh = h5py.File("pops.hdf5", 'w')
