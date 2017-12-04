@@ -1,0 +1,49 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} 
+\usepackage{fullpage}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{mathtools}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+\usepackage{xfrac}
+\usepackage{icomma}
+\usepackage[section,below]{placeins}
+\usepackage[labelfont=bf,font=small,width=0.9\textwidth]{caption}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{float}
+\floatplacement{figure}{htbp}
+\floatplacement{table}{htbp}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage[ngerman]{babel}
+\begin{document}
+\noindent
+%\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
+\large{\textbf{6. Übungsblatt zur Vorlesung \hfill WS 2017/2018 \\
+Statistische Methoden der Datenanalyse \hfill Prof. W. Rhode}} \\
+Annika Burkowitz, Sebastian Bange, Alexander Harnisch \\
+\noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
+
+\section*{Aufgabe 19}
+\subsection*{a)}
+Wenn eine ungewichtete Norm wie die euklidische Norm für die Abstandsberechnung
+verwendet wird und sich die Attribute in der Größenordnung unterscheiden, dann
+haben die größeren Attribute in der Abstandsberechnung ein deutlich höhere
+Gewicht. Es ist praktisch nur noch der Abstand des größten Attributs relevant,
+der Rest spielt keine Rolle mehr. Bspw. Abstand der zwei Punkte $a = (1, 10000,
+5)^{\textup{T}}$ und $b = (3, 10232, 9)^{\textup{T}}$:
+\begin{equation}
+    \sqrt{(a - b)^2} \approx b_2 - a_2 = 232\,.
+\end{equation}
+
+\subsection*{b)}
+Der $k$-NN-Algorithmus wird als \textit{lazy learner} bezeichnet, weil
+praktisch der gesamte Rechenaufwand in die Anwendungs-Phase gelegt wird. Anders
+als bspw. beim Random Forest Verfahren, bei dem in der Lernphase
+rechenaufwendig Bäume erstellt werden, die sich in der Anwendungsphase mit
+relativ geringem Rechenaufwand auswerten lassen.
+
+\end{document}
