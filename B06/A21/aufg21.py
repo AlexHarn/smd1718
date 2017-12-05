@@ -9,7 +9,7 @@ rcParams['legend.numpoints'] = 1
 
 def infgain(data, target, cut):
     cut = np.atleast_1d(cut)
-    p_ytrue = np.count_nonzero(target == True) / len(target)
+    p_ytrue = np.count_nonzero(target) / len(target)
     p_yfalse = 1 - p_ytrue
     H_y = -p_ytrue * np.log2(p_ytrue) - p_yfalse * np.log2(p_yfalse)
 
@@ -23,18 +23,29 @@ def infgain(data, target, cut):
     for i in range(len(cut)):
         p_xhigh[i] = np.count_nonzero(data > cut[i]) / len(data)
         p_xlow[i] = 1 - p_xhigh[i]
-        p_xhigh_ytrue[i] = np.count_nonzero((data >= cut[i]) & (target == True)) / len(data)
-        p_xhigh_yfalse[i] = np.count_nonzero((data >= cut[i]) & (target == False)) / len(data)
-        p_xlow_ytrue[i] = np.count_nonzero((data < cut[i]) & (target == True)) / len(data)
-        p_xlow_yfalse[i] = np.count_nonzero((data < cut[i]) & (target == False)) / len(data)
+        p_xhigh_ytrue[i] = np.count_nonzero((data >= cut[i])
+                                            & (target is True)) / len(data)
+        p_xhigh_yfalse[i] = np.count_nonzero((data >= cut[i])
+                                             & (target is False)) / len(data)
+        p_xlow_ytrue[i] = np.count_nonzero((data < cut[i])
+                                           & (target is True)) / len(data)
+        p_xlow_yfalse[i] = np.count_nonzero((data < cut[i])
+                                            & (target is False)) / len(data)
 
-        H_y_x[i] = -p_xhigh[i]*((0 if p_xhigh_ytrue[i] == 0 else p_xhigh_ytrue[i]*np.log2(p_xhigh_ytrue[i])) +
-                          (0 if p_xhigh_yfalse[i] == 0 else p_xhigh_yfalse[i]*np.log2(p_xhigh_yfalse[i]))) \
-                -p_xlow[i]*((0 if p_xlow_ytrue[i] == 0 else p_xlow_ytrue[i]*np.log2(p_xlow_ytrue[i])) +
-                         (0 if p_xlow_yfalse[i] == 0 else p_xlow_yfalse[i]*np.log2(p_xlow_yfalse[i])))
+        H_y_x[i] = \
+            -p_xhigh[i]*((0 if p_xhigh_ytrue[i] == 0 else
+                          p_xhigh_ytrue[i]*np.log2(p_xhigh_ytrue[i])) +
+                         (0 if p_xhigh_yfalse[i] == 0 else
+                          p_xhigh_yfalse[i]*np.log2(p_xhigh_yfalse[i]))) \
+            - p_xlow[i]*((0 if p_xlow_ytrue[i] == 0 else
+                          p_xlow_ytrue[i]*np.log2(p_xlow_ytrue[i])) +
+                         (0 if p_xlow_yfalse[i] == 0 else
+                          p_xlow_yfalse[i]*np.log2(p_xlow_yfalse[i])))
 
     return H_y - H_y_x
 
+
+# ----------------------------------- Main ------------------------------------
 if __name__ == "__main__":
     data = pd.read_csv("data.csv")
 
@@ -48,7 +59,8 @@ if __name__ == "__main__":
 
     # Wettervorhersage
     forecast = np.linspace(-0.5, 3, 4)
-    plt.plot(forecast, infgain(data["Wettervorhersage"], data["Fußball"], forecast), 'rx')
+    plt.plot(forecast, infgain(data["Wettervorhersage"], data["Fußball"],
+                               forecast), 'rx')
     plt.xlabel(r"Cut$_{\rm{Wettervorhersage}}$")
     plt.ylabel("Informationsgewinn")
     plt.xlim(forecast[0], forecast[-1])
@@ -56,8 +68,9 @@ if __name__ == "__main__":
 
     # Luftfeuchtigkeit
     air = np.linspace(62.5, 100, 8)
-    plt.plot(air, infgain(data["Luftfeuchtigkeit"], data["Fußball"], air), 'rx')
+    plt.plot(air, infgain(data["Luftfeuchtigkeit"], data["Fußball"], air),
+             'rx')
     plt.xlabel(r"Cut$_{\rm{Luftfeuchtigkeit}}$")
-    plt.ylabel("infgain")                                    
+    plt.ylabel("infgain")
     plt.xlim(air[0], air[-1])
     plt.savefig("Luftfeuchtigkeit.pdf")
