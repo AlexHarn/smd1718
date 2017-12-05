@@ -57,7 +57,7 @@ if __name__ == '__main__':
     signal = pd.read_hdf("NeutrinoMC.hdf5", "Signal")
     background = pd.read_hdf("NeutrinoMC.hdf5", "Background")
 
-    signal.drop(columns=["Energy", "AcceptanceMask"], inplace=True)
+    signal.drop(columns=["Energy"], inplace=True)
     x_train = signal.iloc[:5000].append(background.iloc[:5000])
     y_train = np.concatenate((np.ones(5000), np.zeros(5000)))
     x_test = signal.iloc[5000:].append(background.iloc[5000:])
