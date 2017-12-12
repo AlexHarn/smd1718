@@ -41,12 +41,15 @@ def gradient(W, X, y):
     """
     # Falls die erste Spalte von X Einsen sind, ist die erste Zeile von W
     # der Biasvektor
+    # würde reichen f und softmax nur einmal zu berechnen für loss_cross_end
+    # und gradient, ist aber hier von der Performance kein Problem und so
+    # besser lesbar
     f = X@W
     p = softmax(f)
     # Herleitung war aufgabe b). Hier sieht man auch ganz klar, dass es
     # definitiv ein Vektor ist was in (4) falsch ist...
     dh = (p - y)  # Eigentlich noch /m aber das kommt in der nächsten Zeile
-    dW = (X.T@dh)/dh.shape[0]
+    dW = X.T@dh/dh.shape[0]
     return dW
 
 
@@ -63,7 +66,7 @@ def gradient_descent(X, y, max_iter=10000, step_size=0.01):
 
     # leere liste um loss historie zu speichern
     losses = []
-    # mit zufällig initiallisierten Gewichten (und biasen) anfangen
+    # mit zufällig initiallisierten Gewichten (und Biasen) anfangen
     W = np.random.normal(size=(p, K))*step_size
     for i in tqdm(range(max_iter)):
         W = W - gradient(W, X, y)*step_size
