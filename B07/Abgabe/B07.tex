@@ -19,6 +19,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage{pdfpages}
 \begin{document}
 \noindent
 %\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
@@ -27,10 +28,32 @@ Statistische Methoden der Datenanalyse \hfill Prof. W. Rhode}} \\
 Annika Burkowitz, Sebastian Bange, Alexander Harnisch \\
 \noindent\makebox[\linewidth]{\rule{\textwidth}{0.4pt}}
 
+
+\includepdf[pages=1-3]{../Rechnungen.pdf}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../A22/A22.png}
+    \caption{Datenpunkte und Trenngrade.}
+\end{figure}
+
+\FloatBarrier
+\includepdf[pages=4]{../Rechnungen.pdf}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../A23/A23_scatter.png}
+    \caption{Korrelierte Parameter $a_0$ und $a_1$.}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../A23/A23_resultat.pdf}
+    \caption{Vergleich des numerisch bestimmten Fehlers mit dem analytisch bestimmten Fehlers.}
+\end{figure}
+\FloatBarrier
+
 \section*{Aufgabe 24}
 \subsection*{a)}
 Die Lossfunktion gibt an, wie schlecht die berechnete Vorhersage im Vergleich
-zu dem korrekten Ergebnis ist, wenn der Gewichtungsvektor $\vec{w}$ angewandt wird.
+zu dem korrekten Ergebnis ist.
 Um die bestmögliche Vorhersage zu treffen, muss die Lossfunktion minimiert werden.
 
 \subsection*{b)}
@@ -76,11 +99,14 @@ damit die Aktivierungsfunktion die Eingabe modulieren kann und somit die Ausgabe
 festlegen kann.
 
 \subsection*{e)}
+Allgemein sind neuronale Netze dann besonders gut geeignet, wenn man selber die Lösung
+nicht vernünftig mathematisch beschreiben kann.
 Anwendungsbeispiele für Neuronale Netze:
 \begin{enumerate}
-  \item Bilderkennung
-  \item Klassifikation
-  \item Entscheidungsverfahren
+  \item Bilderkennung: Wie definiert man einen Stuhl? Lösung: Das neuronale Netz soll sich
+  das selber benennen.
+  \item Spiele: Sehr viele mögliche Parameter, Problem wird zu hochdimensional.
+  \item Sinnerkennung von Sprache (Siri, Cortana, Alexa,..): Ähnlich wie Bilderkennung zur Erkennung der Worte und viele mögliche Parameter, weil jeder leicht anders formuliert.
 \end{enumerate}
 
 \end{document}
