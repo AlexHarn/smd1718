@@ -16,7 +16,7 @@ print(cols.values)
 
 for feature in cols:
     a, b, _, _, _ = linregress(df_train[feature], df_train["SalePrice"])
-    x = np.array([np.min(df_train[feature])-1, np.max(df_train[feature]) + 1])
+    x = np.array([np.min(df_train[feature]) - 1, np.max(df_train[feature]) + 1])
     plt.scatter(df_train[feature], df_train["SalePrice"], marker=".",
                 label="Datenpunkte")
     plt.plot(x, a*x + b, "r-", label="Lineare Regression")
@@ -29,8 +29,8 @@ for feature in cols:
     plt.clf()
 
     y_pred = a*df_train[feature] + b
-    plt.hist(y_pred - df_train["SalePrice"], bins=25)
-    plt.xlabel("Vorhersage - Verkaufspreis")
+    plt.hist((y_pred - df_train["SalePrice"])/df_train["SalePrice"], bins=25)
+    plt.xlabel("(Vorhersage - Verkaufspreis)/Verkaufspreis")
     plt.ylabel("Häufigkeit")
     # plt.show()
     plt.savefig("Hist_{}.pdf".format((feature)))
