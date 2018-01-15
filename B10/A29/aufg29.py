@@ -8,6 +8,7 @@ rcParams['figure.figsize'] = 10, 5.8
 rcParams['legend.numpoints'] = 1
 
 
+# -------------------------------- Funktionen ---------------------------------
 def F(l):
     return -30*np.log(l) + 3*l + \
         np.log(factorial(13)*factorial(8)*factorial(9))
@@ -60,7 +61,8 @@ def aufg29d():
     plt.savefig("A29d.pdf")
 
 
+# ----------------------------------- Main ------------------------------------
 if __name__ == "__main__":
-    # aufg29a()
+    aufg29a()
     aufg29c()
     aufg29d()
