@@ -19,6 +19,8 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage[ngerman]{babel}
+\usepackage{pdfpages}
+
 \begin{document}
 \noindent
 %\centerline{\small{\textsc{Technische Universität Dortmund}}} \\
@@ -74,4 +76,22 @@ Das Ergebnis ist in Abbildung~\ref{fig:31c} dargestellt.
     \caption{Gewichteter geringste Quadrate Fit ohne Regularisierung an die Daten \textit{aufg\_c.csv}.}
     \label{fig:31c}
 \end{figure}
+\FloatBarrier
+
+\includepdf[pages=1]{../Rechnungen.pdf}
+\FloatBarrier
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../A29/A29a.pdf}
+    \caption{Negative Log-Likelihood-Funktion.}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{../A29/A29d.pdf}
+    \caption{Negative Log-Likelihood-Funktion, zusammen mit der Taylorentwicklung um das Minimum.}
+\end{figure}
+\FloatBarrier
+
+\includepdf[pages=2-3]{../Rechnungen.pdf}
+
 \end{document}

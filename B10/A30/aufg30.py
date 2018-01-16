@@ -30,4 +30,8 @@ delta = np.arctan(-a[1]/a[0])
 delta_err = np.sqrt((-a[1]/(a[0]**2 + a[1]**2)*a_err)**2
                     + (a[0]/(a[0]**2 + a[1]**2)*a_err)**2)
 A0 = a[0]/np.cos(delta)
-print(np.deg2rad(delta_err))
+A0_err = np.sqrt((a_err/np.cos(delta))**2
+                    + (a[0]*np.tan(delta)/np.cos(delta)
+                    *delta_err)**2)
+print(np.rad2deg(delta_err))
+print(A0_err)
